@@ -1,0 +1,5 @@
+taskId, taskTitle, taskPriority, taskDuration, taskDeadline, taskPrerequisites
+T1, Learn Java Basics, HIGH, 8, 2026-08-15,
+T2, Learn Java OOPs, HIGH, 6, 2026-08-30, T1
+T3, Maths For DSA, MEDIUM, 4, 2026-10-15, T1 | T2
+T4, Build A Project, LOW, 15, 2026-10-15,
