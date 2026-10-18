@@ -28,7 +28,12 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+# IntelliJ configuration
 .idea/
 *.iml
+
+# Compiled output
 out/
+build/
+target/
 *.class
