@@ -11,6 +11,7 @@ public class Task {
     private final int duration;
     private final LocalDate deadline;
     private final List<String> prerequisiteIds;
+
     private final List<Task> dependents;
     private int pendingPrerequisites;
 

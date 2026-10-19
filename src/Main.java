@@ -20,10 +20,30 @@ public class Main {
 
             Scheduler scheduler = new Scheduler(tasks);
 
+            System.out.println("Dependency graph:");
+
+            for (Task task : tasks) {
+                System.out.println(task.getId()+" | pending prerequisites: "+task.getPendingPrerequisites());
+
+                System.out.print("Dependents: ");
+
+                List<Task> dependents = task.getDependents();
+
+                if (dependents.isEmpty()) {
+                    System.out.println("None"+"\n");
+                } else {
+                    for (Task dependent : task.getDependents()) {
+                        System.out.print(dependent.getId() + " ");
+                    }
+
+                    System.out.println("\n");
+                }
+            }
+
             Task selectedTask = scheduler.getTaskById("T2");
 
             if (selectedTask != null) {
-                System.out.println("\nTask lookup successful: " + selectedTask.getId() + " | " + selectedTask.getTitle());
+                System.out.println("\nFound task: " + selectedTask.getId() + " | " + selectedTask.getTitle());
             } else {
                 System.out.println("\nTask not found.");
             }
@@ -33,7 +53,9 @@ public class Main {
         } catch (IOException exception) {
             System.err.println("Could not read the file: " + exception.getMessage());
         } catch (IllegalArgumentException exception) {
-            System.err.println("Scheduling error: " + exception.getMessage());
+            System.err.println(
+                    "Graph error: " + exception.getMessage()
+            );
         }
     }
 }
