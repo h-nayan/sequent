@@ -30,7 +30,7 @@ public class Main {
                 List<Task> dependents = task.getDependents();
 
                 if (dependents.isEmpty()) {
-                    System.out.println("None"+"\n");
+                    System.out.println("None\n");
                 } else {
                     for (Task dependent : task.getDependents()) {
                         System.out.print(dependent.getId() + " ");

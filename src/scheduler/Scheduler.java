@@ -5,6 +5,8 @@ import model.Task;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Scheduler {
 
@@ -13,7 +15,8 @@ public class Scheduler {
     public Scheduler(List<Task> tasks) {
         this.taskMap = new HashMap<>();
 
-        indexTasks(tasks);
+        indexTasks(tasks);  //Accesses the ID of each task and adds the respective task ID and its task reference as Key-Value pairs into taskMap.
+        validateDependencies(tasks);
         linkDependencies(tasks);
     }
 
@@ -33,6 +36,28 @@ public class Scheduler {
 
     public Task getTaskById(String id) {
         return taskMap.get(id);
+    }
+
+    private void validateDependencies(List<Task> tasks) {
+        for (Task task : tasks) {
+            Set<String> seenPrerequisites = new HashSet<>();
+
+            for (String prerequisiteId : task.getPrerequisiteIds()) {
+                if (prerequisiteId.equals(task.getId())) {
+                    throw new IllegalArgumentException("Task "+task.getId()+" cannot depend on itself.");
+                }
+
+                if (!taskMap.containsKey(prerequisiteId)) {
+                    throw new IllegalArgumentException("Task "+task.getId()+" references unknown prerequisite: "+prerequisiteId);
+                }
+
+                boolean added = seenPrerequisites.add(prerequisiteId);
+
+                if (!added) {
+                    throw new IllegalArgumentException("Task "+task.getId()+" lists prerequisite "+prerequisiteId + " more than once.");
+                }
+            }
+        }
     }
 
     private void linkDependencies(List<Task> tasks) {
