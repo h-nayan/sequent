@@ -17,7 +17,7 @@ public class Main {
             for (Task task : tasks) {
                 System.out.println(task);
             }
-
+            System.out.println();
             Scheduler scheduler = new Scheduler(tasks);
 
             System.out.println("Dependency graph:");
@@ -43,18 +43,24 @@ public class Main {
             Task selectedTask = scheduler.getTaskById("T2");
 
             if (selectedTask != null) {
-                System.out.println("\nFound task: " + selectedTask.getId() + " | " + selectedTask.getTitle());
+                System.out.println("\nFound task: "+selectedTask.getId() +" | " +selectedTask.getTitle()+"\n");
             } else {
-                System.out.println("\nTask not found.");
+                System.out.println("\nTask not found.\n");
+            }
+
+            System.out.println("Scheduled Task Order:");
+
+            for (Task task : scheduler.getSchedule()) {
+                System.out.println(task.getId()+ " | " +task.getTitle());
             }
 
         } catch (InvalidCSVRowException exception) {
-            System.err.println("CSV error: " + exception.getMessage());
+            System.err.println("CSV error: "+exception.getMessage());
         } catch (IOException exception) {
-            System.err.println("Could not read the file: " + exception.getMessage());
+            System.err.println("Could not read the file: "+exception.getMessage());
         } catch (IllegalArgumentException exception) {
             System.err.println(
-                    "Graph error: " + exception.getMessage()
+                    "Graph error: "+exception.getMessage()
             );
         }
     }

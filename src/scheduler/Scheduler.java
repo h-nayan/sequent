@@ -2,22 +2,21 @@ package scheduler;
 
 import model.Task;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Scheduler {
 
     private final Map<String, Task> taskMap;
+    private final List<Task> schedule;
 
     public Scheduler(List<Task> tasks) {
         this.taskMap = new HashMap<>();
+        this.schedule = new ArrayList<>();
 
         indexTasks(tasks);  //Accesses the ID of each task and adds the respective task ID and its task reference as Key-Value pairs into taskMap.
-        validateDependencies(tasks);
-        linkDependencies(tasks);
+        validateDependencies(tasks);    //Checks whether the task list is valid.
+        linkDependencies(tasks);    //Links the prerequisites with its dependents.
+        scheduleTasks(tasks);   //Uses already built-in graph to produce the actual task order.
     }
 
     private void indexTasks(List<Task> tasks) {
@@ -29,13 +28,16 @@ public class Scheduler {
                         "Duplicate Task ID: " + id
                 );
             }
-
             taskMap.put(id, task);
         }
     }
 
     public Task getTaskById(String id) {
         return taskMap.get(id);
+    }
+
+    public List<Task> getSchedule() {
+        return schedule;
     }
 
     private void validateDependencies(List<Task> tasks) {
@@ -72,6 +74,33 @@ public class Scheduler {
                 prerequisite.addDependent(task);
                 task.incrementPendingPrerequisites();
             }
+        }
+    }
+
+    private void scheduleTasks(List<Task> tasks) {
+        Queue<Task> readyTasks = new ArrayDeque<>();
+
+        for (Task task : tasks) {
+            if (task.getPendingPrerequisites() == 0) {
+                readyTasks.add(task);
+            }
+        }
+
+        while (!readyTasks.isEmpty()) {
+            Task currentTask = readyTasks.poll();
+            schedule.add(currentTask);
+
+            for (Task dependent : currentTask.getDependents()) {
+                dependent.decrementPendingPrerequisites();
+
+                if (dependent.getPendingPrerequisites() == 0) {
+                    readyTasks.add(dependent);
+                }
+            }
+        }
+
+        if (schedule.size() != tasks.size()) {
+            throw new IllegalStateException("Circular dependency detected. Not all tasks can be scheduled.");
         }
     }
 }
