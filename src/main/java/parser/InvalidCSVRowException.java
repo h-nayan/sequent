@@ -1,4 +1,4 @@
-package parser;
+package main.java.parser;
 
 public class InvalidCSVRowException extends RuntimeException{
     public InvalidCSVRowException(String message) {

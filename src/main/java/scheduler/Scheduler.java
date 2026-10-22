@@ -1,6 +1,6 @@
-package scheduler;
+package main.java.scheduler;
 
-import model.Task;
+import main.java.model.Task;
 
 import java.util.*;
 

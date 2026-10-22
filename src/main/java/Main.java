@@ -1,7 +1,9 @@
-import model.Task;
-import parser.CSVParser;
-import parser.InvalidCSVRowException;
-import scheduler.Scheduler;
+package main.java;
+
+import main.java.model.Task;
+import main.java.parser.CSVParser;
+import main.java.parser.InvalidCSVRowException;
+import main.java.scheduler.Scheduler;
 
 import java.io.IOException;
 import java.util.List;

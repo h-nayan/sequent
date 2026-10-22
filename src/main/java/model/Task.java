@@ -1,4 +1,4 @@
-package model;
+package main.java.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

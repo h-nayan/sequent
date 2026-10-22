@@ -1,7 +1,7 @@
-package parser;
+package main.java.parser;
 
-import model.Priority;
-import model.Task;
+import main.java.model.Priority;
+import main.java.model.Task;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
