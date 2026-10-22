@@ -78,7 +78,9 @@ public class Scheduler {
     }
 
     private void scheduleTasks(List<Task> tasks) {
-        Queue<Task> readyTasks = new ArrayDeque<>();
+        Queue<Task> readyTasks = new PriorityQueue<>(Comparator.comparing(Task::getPriority).reversed().
+                thenComparing(Task::getDeadline, Comparator.nullsLast(Comparator.naturalOrder())).
+                thenComparing(Task::getId));
 
         for (Task task : tasks) {
             if (task.getPendingPrerequisites() == 0) {
@@ -100,7 +102,7 @@ public class Scheduler {
         }
 
         if (schedule.size() != tasks.size()) {
-            throw new IllegalStateException("Circular dependency detected. Not all tasks can be scheduled.");
+            throw new IllegalStateException("Circular dependency detected; Not all tasks can be scheduled.");
         }
     }
 }
