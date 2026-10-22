@@ -102,7 +102,21 @@ public class Scheduler {
         }
 
         if (schedule.size() != tasks.size()) {
-            throw new IllegalStateException("Circular dependency detected; Not all tasks can be scheduled.");
+            Set<String> scheduledTaskIds = new HashSet<>();
+
+            for (Task task : schedule) {
+                scheduledTaskIds.add(task.getId());
+            }
+
+            List<String> unresolvedTaskIds = new ArrayList<>();
+
+            for (Task task : tasks) {
+                if (!scheduledTaskIds.contains(task.getId())) {
+                    unresolvedTaskIds.add(task.getId());
+                }
+            }
+
+            throw new IllegalStateException("Circular dependency detected. "+unresolvedTaskIds.size()+" of "+tasks.size() + " tasks cannot be scheduled: "+ unresolvedTaskIds);
         }
     }
 }
