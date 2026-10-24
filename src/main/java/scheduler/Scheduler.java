@@ -9,11 +9,13 @@ public class Scheduler {
     private final Map<String, Task> taskMap;
     private final List<Task> schedule;
     private final Map<String, Integer> inDegree;
+    private final Map<String, List<Task>> dependents;
 
     public Scheduler(List<Task> tasks) {
         this.taskMap = new HashMap<>();
         this.schedule = new ArrayList<>();
         this.inDegree = new HashMap<>();
+        this.dependents = new HashMap<>();
 
         indexTasks(tasks);  //Accesses the ID of each task and adds the respective task ID and its task reference as Key-Value pairs into taskMap.
         validateDependencies(tasks);    //Checks whether the task list is valid.
@@ -29,8 +31,8 @@ public class Scheduler {
                 throw new IllegalArgumentException("Duplicate Task ID: "+id);
             }
             taskMap.put(id, task);
-
             inDegree.put(id, 0);
+            dependents.put(id, new ArrayList<>());
         }
     }
 
@@ -40,6 +42,10 @@ public class Scheduler {
 
     public List<Task> getSchedule() {
         return schedule;
+    }
+
+    public List<Task> getDependents(String id) {
+        return dependents.get(id);
     }
 
     private void validateDependencies(List<Task> tasks) {
@@ -73,7 +79,7 @@ public class Scheduler {
                     throw new IllegalArgumentException("Task "+task.getId()+" references unknown prerequisite: "+prerequisiteId);
                 }
 
-                prerequisite.addDependent(task);
+                dependents.get(prerequisiteId).add(task);
                 inDegree.put(task.getId(), inDegree.get(task.getId())+1);
             }
         }
@@ -94,7 +100,7 @@ public class Scheduler {
             Task currentTask = readyTasks.poll();
             schedule.add(currentTask);
 
-            for (Task dependent : currentTask.getDependents()) {
+            for (Task dependent : dependents.get(currentTask.getId())) {
                 int remaining = inDegree.get(dependent.getId()) - 1;
                 inDegree.put(dependent.getId(), remaining);
 

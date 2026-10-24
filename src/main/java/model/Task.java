@@ -12,8 +12,6 @@ public class Task {
     private final LocalDate deadline;
     private final List<String> prerequisiteIds;
 
-    private final List<Task> dependents;
-
     public Task(String id, String title, Priority priority, int duration, LocalDate deadline, List<String> prerequisiteIds) {
         this.id = id;
         this.title = title;
@@ -21,7 +19,6 @@ public class Task {
         this.duration = duration;
         this.deadline = deadline;
         this.prerequisiteIds = new ArrayList<>(prerequisiteIds);
-        this.dependents = new ArrayList<>();
     }
 
     public String getId() {
@@ -46,14 +43,6 @@ public class Task {
 
     public List<String> getPrerequisiteIds() {
         return prerequisiteIds;
-    }
-
-    public List<Task> getDependents() {
-        return dependents;
-    }
-
-    public void addDependent(Task task) {
-        dependents.add(task);
     }
 
     public boolean hasDeadline() {

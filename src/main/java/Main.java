@@ -25,16 +25,16 @@ public class Main {
             System.out.println("Dependency graph:");
 
             for (Task task : tasks) {
-                System.out.println(task.getId()+" | pending prerequisites: "+task.getPrerequisiteIds().size());
+                System.out.println(task.getId() + " | prerequisites: " + task.getPrerequisiteIds().size());
 
                 System.out.print("Dependents: ");
 
-                List<Task> dependents = task.getDependents();
+                List<Task> dependents = scheduler.getDependents(task.getId());
 
                 if (dependents.isEmpty()) {
                     System.out.println("None\n");
                 } else {
-                    for (Task dependent : task.getDependents()) {
+                    for (Task dependent : dependents) {
                         System.out.print(dependent.getId() + " ");
                     }
 
@@ -42,28 +42,28 @@ public class Main {
                 }
             }
 
-            Task selectedTask = scheduler.getTaskById("T2");
+                Task selectedTask = scheduler.getTaskById("T2");
 
-            if (selectedTask != null) {
-                System.out.println("\nFound task: "+selectedTask.getId() +" | " +selectedTask.getTitle()+"\n");
-            } else {
-                System.out.println("\nTask not found.\n");
+                if (selectedTask != null) {
+                    System.out.println("\nFound task: " + selectedTask.getId() + " | " + selectedTask.getTitle() + "\n");
+                } else {
+                    System.out.println("\nTask not found.\n");
+                }
+
+                System.out.println("Scheduled Task Order:");
+
+                for (Task task : scheduler.getSchedule()) {
+                    System.out.println(task.getId() + " | " + task.getTitle());
+                }
+
+            } catch(InvalidCSVRowException exception){
+                System.err.println("CSV error: " + exception.getMessage());
+            } catch(IOException exception){
+                System.err.println("Could not read the file: " + exception.getMessage());
+            } catch(IllegalArgumentException exception){
+                System.err.println("Graph error: " + exception.getMessage());
+            } catch(IllegalStateException exception){
+                System.err.println("Scheduling error: " + exception.getMessage());
             }
-
-            System.out.println("Scheduled Task Order:");
-
-            for (Task task : scheduler.getSchedule()) {
-                System.out.println(task.getId()+ " | " +task.getTitle());
-            }
-
-        } catch (InvalidCSVRowException exception) {
-            System.err.println("CSV error: "+exception.getMessage());
-        } catch (IOException exception) {
-            System.err.println("Could not read the file: "+exception.getMessage());
-        } catch (IllegalArgumentException exception) {
-            System.err.println("Graph error: "+exception.getMessage());
-        } catch (IllegalStateException exception) {
-            System.err.println("Scheduling error: "+exception.getMessage());
         }
     }
-}
