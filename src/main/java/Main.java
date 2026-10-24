@@ -20,6 +20,7 @@ public class Main {
                 System.out.println(task);
             }
             System.out.println();
+
             Scheduler scheduler = new Scheduler(tasks);
 
             System.out.println("Dependency graph:");
