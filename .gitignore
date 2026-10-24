@@ -36,4 +36,6 @@ bin/
 out/
 build/
 target/
-*.classbackup-tests/
+*.class
+
+backup-tests/
