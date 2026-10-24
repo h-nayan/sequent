@@ -1,0 +1,4 @@
+id,title,priority,duration,deadline,prerequisites
+T1,Setup,HIGH,2,2026-11-01,
+T2,Design,MEDIUM,3,,T2
+T3,Backend,HIGH,5,2026-11-10,T1

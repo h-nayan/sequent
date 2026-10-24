@@ -1,0 +1,12 @@
+
+8 tasks loaded successfully.
+
+T1 | Setup | HIGH | 2 hours | 2026-11-01
+T2 | Design | MEDIUM | 3 hours | No Deadline
+T3 | Backend | HIGH | 5 hours | 2026-11-10
+T4 | Frontend | HIGH | 4 hours | 2026-11-05
+T5 | Integrate | HIGH | 2 hours | No Deadline
+T6 | Review | LOW | 1 hours | 2026-11-20
+T7 | Release | LOW | 1 hours | 2026-11-15
+T8 | Cleanup | LOW | 1 hours | No Deadline
+
