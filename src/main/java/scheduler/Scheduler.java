@@ -8,10 +8,12 @@ public class Scheduler {
 
     private final Map<String, Task> taskMap;
     private final List<Task> schedule;
+    private final Map<String, Integer> inDegree;
 
     public Scheduler(List<Task> tasks) {
         this.taskMap = new HashMap<>();
         this.schedule = new ArrayList<>();
+        this.inDegree = new HashMap<>();
 
         indexTasks(tasks);  //Accesses the ID of each task and adds the respective task ID and its task reference as Key-Value pairs into taskMap.
         validateDependencies(tasks);    //Checks whether the task list is valid.
@@ -24,11 +26,11 @@ public class Scheduler {
             String id = task.getId();
 
             if (taskMap.containsKey(id)) {
-                throw new IllegalArgumentException(
-                        "Duplicate Task ID: " + id
-                );
+                throw new IllegalArgumentException("Duplicate Task ID: "+id);
             }
             taskMap.put(id, task);
+
+            inDegree.put(id, 0);
         }
     }
 
@@ -72,7 +74,7 @@ public class Scheduler {
                 }
 
                 prerequisite.addDependent(task);
-                task.incrementPendingPrerequisites();
+                inDegree.put(task.getId(), inDegree.get(task.getId())+1);
             }
         }
     }
@@ -83,7 +85,7 @@ public class Scheduler {
                 thenComparing(Task::getId));
 
         for (Task task : tasks) {
-            if (task.getPendingPrerequisites() == 0) {
+            if (inDegree.get(task.getId()) == 0) {
                 readyTasks.add(task);
             }
         }
@@ -93,9 +95,10 @@ public class Scheduler {
             schedule.add(currentTask);
 
             for (Task dependent : currentTask.getDependents()) {
-                dependent.decrementPendingPrerequisites();
+                int remaining = inDegree.get(dependent.getId()) - 1;
+                inDegree.put(dependent.getId(), remaining);
 
-                if (dependent.getPendingPrerequisites() == 0) {
+                if (remaining == 0) {
                     readyTasks.add(dependent);
                 }
             }

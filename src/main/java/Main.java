@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             CSVParser parser = new CSVParser();
-            List<Task> tasks = parser.parse("src/cycle.csv");
+            List<Task> tasks = parser.parse("src/task.csv");
 
             System.out.println("\n" + tasks.size() + " tasks loaded successfully.\n");
 
@@ -25,7 +25,7 @@ public class Main {
             System.out.println("Dependency graph:");
 
             for (Task task : tasks) {
-                System.out.println(task.getId()+" | pending prerequisites: "+task.getPendingPrerequisites());
+                System.out.println(task.getId()+" | pending prerequisites: "+task.getPrerequisiteIds().size());
 
                 System.out.print("Dependents: ");
 

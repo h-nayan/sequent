@@ -13,7 +13,6 @@ public class Task {
     private final List<String> prerequisiteIds;
 
     private final List<Task> dependents;
-    private int pendingPrerequisites;
 
     public Task(String id, String title, Priority priority, int duration, LocalDate deadline, List<String> prerequisiteIds) {
         this.id = id;
@@ -23,7 +22,6 @@ public class Task {
         this.deadline = deadline;
         this.prerequisiteIds = new ArrayList<>(prerequisiteIds);
         this.dependents = new ArrayList<>();
-        this.pendingPrerequisites = 0;
     }
 
     public String getId() {
@@ -52,18 +50,6 @@ public class Task {
 
     public List<Task> getDependents() {
         return dependents;
-    }
-
-    public int getPendingPrerequisites() {
-        return pendingPrerequisites;
-    }
-
-    public void incrementPendingPrerequisites() {
-        pendingPrerequisites++;
-    }
-
-    public void decrementPendingPrerequisites() {
-        pendingPrerequisites--;
     }
 
     public void addDependent(Task task) {
