@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             CSVParser parser = new CSVParser();
-            List<Task> tasks = parser.parse("src/task.csv");
+            List<Task> tasks = parser.parse("src/cycle.csv");
 
             System.out.println("\n" + tasks.size() + " tasks loaded successfully.\n");
 
@@ -61,9 +61,9 @@ public class Main {
         } catch (IOException exception) {
             System.err.println("Could not read the file: "+exception.getMessage());
         } catch (IllegalArgumentException exception) {
-            System.err.println(
-                    "Graph error: "+exception.getMessage()
-            );
+            System.err.println("Graph error: "+exception.getMessage());
+        } catch (IllegalStateException exception) {
+            System.err.println("Scheduling error: "+exception.getMessage());
         }
     }
 }

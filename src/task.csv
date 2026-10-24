@@ -1,6 +1,7 @@
 id,title,priority,duration,deadline,prerequisites
-A,Task A,MEDIUM,2,2026-10-25,
-B,Task B,MEDIUM,2,2026-10-26,A | C
-C,Task C,MEDIUM,2,2026-10-27,B
-D,Task D,MEDIUM,1,2026-10-28,C
-E,Task E,LOW,1,2026-10-29,
+T1,Setup,HIGH,2,2026-11-01,
+T2,Design,MEDIUM,3,,T1
+T3,Backend,HIGH,5,2026-11-10,T2
+T4,Frontend,MEDIUM,4,2026-11-10,T2
+T5,Integrate,HIGH,2,,T3|T4
+T10,Docs,LOW,1,,
