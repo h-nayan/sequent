@@ -75,7 +75,7 @@ public class CSVParser {
         try {
             return Priority.valueOf(taskPriority.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new InvalidCSVRowException("Line"+linenumber+": Invalid Priority \""+taskPriority+"\".\nExpected priority: LOW, MEDIUM or HIGH.");
+            throw new InvalidCSVRowException("Line "+linenumber+": Invalid Priority \""+taskPriority+"\".\nExpected priority: LOW, MEDIUM or HIGH.");
         }
     }
 
@@ -84,12 +84,12 @@ public class CSVParser {
             int duration = Integer.parseInt(taskDuration);
 
             if(duration <= 0) {
-                throw new InvalidCSVRowException("Line"+linenumber+": Duration hours must be greater than zero.");
+                throw new InvalidCSVRowException("Line "+linenumber+": Duration hours must be greater than zero.");
             }
 
             return duration;
         } catch (NumberFormatException e) {
-            throw new InvalidCSVRowException("Line"+linenumber+": Invalid Duration \""+taskDuration+"\".\nExpected Duration: A positive natural number." );
+            throw new InvalidCSVRowException("Line "+linenumber+": Invalid Duration \""+taskDuration+"\".\nExpected Duration: A positive natural number." );
         }
     }
 
@@ -102,7 +102,7 @@ public class CSVParser {
 
             return LocalDate.parse(taskDeadline);
         } catch (DateTimeParseException e) {
-            throw new InvalidCSVRowException("Line"+linenumber+": Invalid Deadline \""+taskDeadline+"\".\nExpected Deadline Format: YYYY-MM-DD.");
+            throw new InvalidCSVRowException("Line "+linenumber+": Invalid Deadline \""+taskDeadline+"\".\nExpected Deadline Format: YYYY-MM-DD.");
         }
     }
 
@@ -120,7 +120,7 @@ public class CSVParser {
             String prerequesiteId = prerequsite.trim();
 
             if (prerequesiteId.isBlank()) {
-                throw new InvalidCSVRowException("Line"+linenumber+": A Prerequesite ID cannot be empty.");
+                throw new InvalidCSVRowException("Line "+linenumber+": A Prerequesite ID cannot be empty.");
             }
 
             prerequesiteIds.add(prerequesiteId);
